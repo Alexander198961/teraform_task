@@ -25,18 +25,13 @@ sudo chown -R ubuntu:ubuntu  $WP_PATH/wp-content
 update
 ENV_FILE_PATH=~/.bashrc
 update
-#echo "export DB_NAME=${DB_NAME}" >> $ENV_FILE_PATH
-#echo "export DB_USERNAME=${DB_USERNAME}" >> $ENV_FILE_PATH
-#echo "export DB_PASSWORD=${DB_PASSWORD}" >> $ENV_FILE_PATH
-#echo "export DB_HOST=$DB_REMOTE_HOST" >> $ENV_FILE_PATH
-#echo "export REDIS_ENDPOINT=${REDIS_ENDPOINT}" >> $ENV_FILE_PATH
 wget -P /home/ubuntu/ https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 chmod +x /home/ubuntu/wp-cli.phar
 sudo mv /home/ubuntu/wp-cli.phar /usr/local/bin/wp
-#sudo service apache2 restart
 sleep 4
 source $ENV_FILE_PATH
 whoami > /tmp/whoami
 env >> /tmp/env
-DB_NAME=${DB_NAME} DB_USERNAME=${DB_USERNAME} DB_PASSWORD=${DB_PASSWORD} DB_HOST=$DB_REMOTE_HOST REDIS_ENDPOINT=${REDIS_ENDPOINT} /usr/local/bin/wp plugin install redis-cache  --path=$WP_PATH  --allow-root 2>&1 | tee -a  /tmp/error
-DB_NAME=${DB_NAME} DB_USERNAME=${DB_USERNAME} DB_PASSWORD=${DB_PASSWORD} DB_HOST=$DB_REMOTE_HOST REDIS_ENDPOINT=${REDIS_ENDPOINT} /usr/local/bin/wp plugin activate redis-cache  --path=$WP_PATH  --allow-root 2>&1 | tee -a /tmp/error
+DB_NAME=${DB_NAME} DB_USERNAME=${DB_USERNAME} DB_PASSWORD=${DB_PASSWORD} DB_HOST=$DB_REMOTE_HOST REDIS_ENDPOINT=${REDIS_ENDPOINT} /usr/local/bin/wp plugin install redis-cache  --path=$WP_PATH  --allow-root 2>&1 | tee -a  /tmp/out
+DB_NAME=${DB_NAME} DB_USERNAME=${DB_USERNAME} DB_PASSWORD=${DB_PASSWORD} DB_HOST=$DB_REMOTE_HOST REDIS_ENDPOINT=${REDIS_ENDPOINT} /usr/local/bin/wp plugin activate redis-cache  --path=$WP_PATH  --allow-root 2>&1 | tee -a /tmp/out
+service apache2 restart
