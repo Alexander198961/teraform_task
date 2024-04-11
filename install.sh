@@ -33,5 +33,7 @@ source $ENV_FILE_PATH
 whoami > /tmp/whoami
 env >> /tmp/env
 DB_NAME=${DB_NAME} DB_USERNAME=${DB_USERNAME} DB_PASSWORD=${DB_PASSWORD} DB_HOST=$DB_REMOTE_HOST REDIS_ENDPOINT=${REDIS_ENDPOINT} /usr/local/bin/wp plugin install redis-cache  --path=$WP_PATH  --allow-root 2>&1 | tee -a  /tmp/out
+
+DB_NAME=${DB_NAME} DB_USERNAME=${DB_USERNAME} DB_PASSWORD=${DB_PASSWORD} DB_HOST=$DB_REMOTE_HOST REDIS_ENDPOINT=${REDIS_ENDPOINT} /usr/local/bin/wp user create alex alexander198961@gmail.com --role=administrator   --path=$WP_PATH  --allow-root 2>&1 | tee -a /tmp/out
 DB_NAME=${DB_NAME} DB_USERNAME=${DB_USERNAME} DB_PASSWORD=${DB_PASSWORD} DB_HOST=$DB_REMOTE_HOST REDIS_ENDPOINT=${REDIS_ENDPOINT} /usr/local/bin/wp plugin activate redis-cache  --path=$WP_PATH  --allow-root 2>&1 | tee -a /tmp/out
 service apache2 restart
